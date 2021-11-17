@@ -1,0 +1,23 @@
+version: "3"
+networks: 
+  ch_rouvray_network:
+
+volumes:
+  ch_rouvray_volume:
+
+services:
+  ch_rouvray_db:
+    container_name: ch_rouvray_db
+    ports: 
+      - "5432:5432"
+    image: "postgres:latest"
+    restart: always
+    networks:
+      - ch_rouvray_network
+    volumes:
+      - ch_rouvray_volume:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: "9499"
+      POSTGRES_DB: "ch_rouvray"
+      PGPORT: "5432"
+      POSTGRES_USER: "postgres"
