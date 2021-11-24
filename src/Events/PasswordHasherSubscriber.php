@@ -10,11 +10,11 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class PasswordHasherSubscriber implements EventSubscriberInterface
 {
-    private UserPasswordHasherInterface $encoder;
+    private UserPasswordHasherInterface $passwordHasher;
 
-    public function __construct(UserPasswordHasherInterface $encoder)
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
     {
-        $this->encoder = $encoder;
+        $this->passwordHasher = $passwordHasher;
     }
 
     public static function getSubscribedEvents()
@@ -29,7 +29,7 @@ class PasswordHasherSubscriber implements EventSubscriberInterface
         $user = $event->getControllerResult();
 
         if ($user instanceof User) {
-            $passHash = $this->encoder->hashPassword($user, $user->getPassword());
+            $passHash = $this->passwordHasher->hashPassword($user, $user->getPassword());
             $user->setPassword($passHash);
         }
     }
