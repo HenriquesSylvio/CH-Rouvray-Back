@@ -27,18 +27,22 @@ class UserAuthorizationChecker
     {
         $this->isAuthenticated();
 
-        if ($this->isMethodAllowed($method) &&
-            $user->getId() !== $this->user->getId()
-        ) {
-            $errorMessage = "It's not your resource";
-            throw new UnauthorizedHttpException($errorMessage, $errorMessage);
+        //if (($this->isMethodAllowed($method) && $user->getId() !== $this->user->getId()) || $this->user->getRoles() !== "ROLE_ADMIN")
+        if (!in_array("ROLE_ADMIN", $this->user->getRoles()))
+        {
+            if ($this->isMethodAllowed($method) && $user->getId() !== $this->user->getId())
+            {
+                $errorMessage = "Vous n'êtes pas autorisé a faire cette action";
+                //$errorMessage  = implode(",", $this->user->getRoles());
+                throw new UnauthorizedHttpException($errorMessage, $errorMessage);
+            }
         }
     }
 
     public function isAuthenticated(): void
     {
         if (null === $this->user) {
-            $errorMessage = "You are not authoticated";
+            $errorMessage = "Vous n'êtes pas authentifié";
             throw new UnauthorizedHttpException($errorMessage, $errorMessage);
         }
     }
