@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\PostRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=PostRepository::class)
@@ -64,12 +65,12 @@ class Post
         return $this;
     }
 
-    public function getAuthor(): ?User
+    public function getAuthor(): UserInterface
     {
         return $this->author;
     }
 
-    public function setAuthor(?User $author): self
+    public function setAuthor(UserInterface $author): self
     {
         $this->author = $author;
 

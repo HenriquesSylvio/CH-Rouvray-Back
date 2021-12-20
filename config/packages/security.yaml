@@ -29,6 +29,13 @@ security:
             methods: [PUT, PATCH, DELETE]
             stateless: true
             jwt: ~
+
+        posts:
+            pattern: ^/api/posts
+            methods: [ POST, PUT, PATCH, DELETE ]
+            stateless: true
+            jwt: ~
+
         main:
             lazy: true
             provider: app_user_provider
@@ -45,3 +52,4 @@ security:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/api/users, roles: IS_AUTHENTICATED_FULLY, methods: [PUT, PATCH, DELETE] }
+        - { path: ^/api/posts, roles: IS_AUTHENTICATED_FULLY, methods: [POST, PUT, PATCH, DELETE] }
