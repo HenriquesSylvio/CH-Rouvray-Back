@@ -6,10 +6,21 @@ use App\Repository\PostRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Security\Core\User\UserInterface;
-
+use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass=PostRepository::class)
- * @ApiResource()
+ * @ApiResource(
+ *     collectionOperations={
+ *          "get"={
+ *              "normalization_context"={"groups"={"post_read"}}
+ *          },
+ *      },
+ *     itemOperations={
+ *          "get"={
+ *              "normalization_context"={"groups"={"post_details_read"}}
+ *          },
+ *     }
+ * )
  */
 class Post
 {
@@ -22,17 +33,20 @@ class Post
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"post_details_read", "post_read"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"post_details_read", "post_read"})
      */
     private $content;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="posts")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"post_details_read", "post_read"})
      */
     private $author;
 

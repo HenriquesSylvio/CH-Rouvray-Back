@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -65,6 +66,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *     match=false,
      *     message="Votre prénom ne peut pas contenir de chiffre"
      * )
+     * @Groups({"post_details_read", "post_read"})
      */
     private $firstName;
 
@@ -76,6 +78,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *     match=false,
      *     message="Votre nom ne peut pas contenir de chiffre"
      * )
+     * @Groups({"post_details_read", "post_read"})
      */
     private $lastName;
 
@@ -83,11 +86,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\OneToMany(targetEntity=Post::class, mappedBy="author", orphanRemoval=true)
      */
     private $posts;
-
-    public function __construct()
-    {
-        $this->posts = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -157,11 +155,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getFirstName(): string
+    {
+        return (string) $this->firstName;
+    }
+
     public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
 
         return $this;
+    }
+
+    public function getLastName(): string
+    {
+        return (string) $this->lastName;
     }
 
     /**
