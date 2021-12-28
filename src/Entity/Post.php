@@ -7,6 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Annotation\ApiFilter;
+
 /**
  * @ORM\Entity(repositoryClass=PostRepository::class)
  * @ApiResource(
@@ -21,6 +24,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          },
  *     }
  * )
+ * @ApiFilter(SearchFilter::class, properties={"name": "partial", "content": "partial"})
  */
 class Post
 {
