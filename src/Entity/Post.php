@@ -17,11 +17,15 @@ use ApiPlatform\Core\Annotation\ApiFilter;
  *          "get"={
  *              "normalization_context"={"groups"={"post_read"}}
  *          },
+ *          "post"
  *      },
  *     itemOperations={
  *          "get"={
  *              "normalization_context"={"groups"={"post_details_read"}}
  *          },
+ *          "put",
+ *          "patch",
+ *          "delete"
  *     }
  * )
  * @ApiFilter(SearchFilter::class, properties={"name": "partial", "content": "partial"})
@@ -48,11 +52,23 @@ class Post
     private $content;
 
     /**
+    * @ORM\Column(type="datetime")
+    * @Groups({"post_details_read", "post_read"})
+    */
+    private $createdAt;
+
+    /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="posts")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"post_details_read", "post_read"})
      */
     private $author;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
 
     public function getId(): ?int
     {
@@ -93,5 +109,10 @@ class Post
         $this->author = $author;
 
         return $this;
+    }
+
+    public function getCreatedAt(): \DateTimeInterface
+    {
+        return $this->createdAt;
     }
 }
