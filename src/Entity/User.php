@@ -12,12 +12,15 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Annotation\ApiFilter;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
  * @ApiResource()
  * @UniqueEntity("email", message="Cette email est déjà utilisé")
+ * @ApiFilter(SearchFilter::class, properties={"firstName": "partial", "lastName": "partial"})
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
