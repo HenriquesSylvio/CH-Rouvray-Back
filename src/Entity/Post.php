@@ -9,6 +9,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
 /**
  * @ORM\Entity(repositoryClass=PostRepository::class)
@@ -28,7 +29,9 @@ use ApiPlatform\Core\Annotation\ApiFilter;
  *          "delete"
  *     }
  * )
- * @ApiFilter(SearchFilter::class, properties={"name": "partial", "content": "partial"})
+ * @ApiFilter(SearchFilter::class, properties={"name": "partial", "content": "partial"},
+ * )
+ * @ApiFilter(OrderFilter::class, properties={"id"}, arguments={"orderParameterName"="order"})
  */
 class Post
 {
