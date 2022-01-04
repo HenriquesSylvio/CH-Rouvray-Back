@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Authorizations;
 
-use App\Entity\User;
+use App\Entity\Post;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class UserAuthorizationChecker
+class PostAuthorizationChecker
 {
     private array $methodAllowed = [
         Request::METHOD_PUT,
@@ -24,14 +24,13 @@ class UserAuthorizationChecker
         $this->user = $security->getUser();
     }
 
-    public function check(User $user, string $method): void
+    public function check(Post $post, string $method): void
     {
         $this->isAuthenticated();
 
-        //if (($this->isMethodAllowed($method) && $user->getId() !== $this->user->getId()) || $this->user->getRoles() !== "ROLE_ADMIN")
         if (!in_array("ROLE_ADMIN", $this->user->getRoles()))
         {
-            if ($this->isMethodAllowed($method) && $user->getId() !== $this->user->getId())
+            if ($this->isMethodAllowed($method) && $post->getAuthor()->getId() !== $this->user->getId())
             {
                 $errorMessage = "Vous n'êtes pas autorisé a faire cette action";
                 //$errorMessage  = implode(",", $this->user->getRoles());
