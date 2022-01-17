@@ -69,7 +69,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *     match=false,
      *     message="Votre prénom ne peut pas contenir de chiffre"
      * )
-     * @Groups({"post_details_read", "post_read"})
+     * @Groups({"post_details_read", "post_read", "comment_details_read", "comment_read"})
      */
     private $firstName;
 
@@ -81,7 +81,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *     match=false,
      *     message="Votre nom ne peut pas contenir de chiffre"
      * )
-     * @Groups({"post_details_read", "post_read"})
+     * @Groups({"post_details_read", "post_read", "comment_details_read", "comment_read"})
      */
     private $lastName;
 
