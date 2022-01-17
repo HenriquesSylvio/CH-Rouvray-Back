@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=CommentRepository::class)
@@ -27,7 +28,7 @@ class Comment
     /**
      * @ORM\Column(type="datetime")
      */
-    private $CreateAt;
+    private $createAt;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class)
@@ -36,14 +37,14 @@ class Comment
     private $author;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Post::class)
+     * @ORM\ManyToOne(targetEntity=Post::class, inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
      */
     private $belongTo;
 
     public function __construct()
     {
-        $this->createdAt = new \DateTime();
+        $this->createAt = new \DateTime();
     }
 
     public function getId(): ?int
@@ -65,34 +66,34 @@ class Comment
 
     public function getCreateAt(): ?\DateTimeInterface
     {
-        return $this->CreateAt;
+        return $this->createAt;
     }
 
-    public function setCreateAt(\DateTimeInterface $CreateAt): self
+    public function setCreateAt(\DateTimeInterface $createAt): self
     {
-        $this->CreateAt = $CreateAt;
+        $this->createAt = $createAt;
 
         return $this;
     }
 
-    public function getAuthor(): ?User
+    public function getAuthor(): UserInterface
     {
         return $this->author;
     }
 
-    public function setAuthor(?User $author): self
+    public function setAuthor(UserInterface $author): self
     {
         $this->author = $author;
 
         return $this;
     }
 
-    public function getBelongTo(): ?Post
+    public function getBelongTo(): Post
     {
         return $this->belongTo;
     }
 
-    public function setBelongTo(?User $belongTo): self
+    public function setBelongTo(Post $belongTo): self
     {
         $this->belongTo = $belongTo;
 

@@ -4,6 +4,7 @@ namespace App\Events;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Authorizations\UserAuthorizationChecker;
+use App\Entity\Comment;
 use App\Entity\Post;
 use App\Entity\User;
 use App\Services\ResourceUpdatorInterface;
@@ -32,7 +33,7 @@ class ResourceUpdatorSubscriber implements EventSubscriberInterface
     {
         $object = $event->getControllerResult();
 
-        if ($object instanceof User || $object instanceof Post) {
+        if ($object instanceof User || $object instanceof Post || $object instanceof Comment) {
             $user = $object instanceof User ? $object : $object->getAuthor();
             $this->resourceUpdator->proccess($event->getRequest()->getMethod(), $user);
         }

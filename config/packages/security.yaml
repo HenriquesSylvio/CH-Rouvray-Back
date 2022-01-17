@@ -36,6 +36,12 @@ security:
             stateless: true
             jwt: ~
 
+        comments:
+            pattern: ^/api/comments
+            methods: [ POST, PUT, PATCH, DELETE ]
+            stateless: true
+            jwt: ~
+            
         main:
             lazy: true
             provider: app_user_provider
@@ -53,3 +59,4 @@ security:
         # - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/api/users, roles: IS_AUTHENTICATED_FULLY, methods: [PUT, PATCH, DELETE] }
         - { path: ^/api/posts, roles: IS_AUTHENTICATED_FULLY, methods: [POST, PUT, PATCH, DELETE] }
+        - { path: ^/api/comments, roles: IS_AUTHENTICATED_FULLY, methods: [POST, PUT, PATCH, DELETE] }
