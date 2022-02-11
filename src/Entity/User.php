@@ -90,6 +90,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $posts;
 
+//    /**
+//     * @ORM\OneToMany(targetEntity=Participant::class, mappedBy="user")
+//     */
+//    private $participants;
+
+//    /**
+//     * @ORM\OneToMany(targetEntity="Message", mappedBy="user")
+//     */
+//    private $messages;
+
     public function getId(): ?int
     {
         return $this->id;

@@ -40,6 +40,7 @@ class Post
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
+     * @Groups({"post_details_read", "post_read"})
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -71,6 +72,7 @@ class Post
 
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="belongTo")
+     * @Groups({"post_details_read", "post_read"})
      */
     private $comments;
 

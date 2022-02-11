@@ -30,8 +30,10 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *     }
  * )
  * @ApiFilter(OrderFilter::class, properties={"id"}, arguments={"orderParameterName"="order"})
+ * @ApiFilter(SearchFilter::class, properties={"belongTo": "exact"})
  */
 
+// *  * @ApiFilter(SearchFilter::class, properties={"firstName": "partial", "lastName": "partial"})
 class Comment
 {
     /**
@@ -43,13 +45,13 @@ class Comment
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"comment_details_read", "comment_read"})
+     * @Groups({"comment_details_read", "comment_read", "post_details_read", "post_read"})
      */
     private $content;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"comment_details_read", "comment_read"})
+     * @Groups({"comment_details_read", "comment_read", "post_details_read", "post_read"})
      */
     private $createAt;
 
@@ -63,6 +65,7 @@ class Comment
     /**
      * @ORM\ManyToOne(targetEntity=Post::class, inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"comment_details_read", "comment_read"})
      */
     private $belongTo;
 
